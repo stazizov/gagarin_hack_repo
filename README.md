@@ -1,3 +1,9 @@
+# Руководство по установке 
+##  убедитесь что у вас установлен git lfs (для установки пройдите по ссылке https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage)
+```
+pip install -r requirements.txt
+```
+
 # Требования к интерфейсу
 
 Чтобы решение проходило автоматические тесты необходимо чтобы:
