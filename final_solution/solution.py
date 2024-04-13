@@ -73,5 +73,4 @@ def score_texts(
                 entity_score = float(sent_score)
                 current_scores.append((entity_id, entity_score))
         output_scores.append(current_scores)
-    print(output_scores)
     return output_scores
