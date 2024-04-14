@@ -1,8 +1,8 @@
 import typing as tp
 import pathlib
 import numpy as np
-from onnxruntime import InferenceSession
-from tokenizers import Tokenizer
+from onnxruntime import InferenceSession  # type: ignore
+from tokenizers import Tokenizer  # type: ignore
 import json
 
 EntityScoreType = tp.Tuple[int, float]  # (entity_id, entity_score)
