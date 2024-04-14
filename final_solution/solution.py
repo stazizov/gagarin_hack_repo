@@ -6,10 +6,7 @@ from tokenizers import Tokenizer
 import json
 
 EntityScoreType = tp.Tuple[int, float]  # (entity_id, entity_score)
-MessageResultType = tp.List[
-    EntityScoreType
-]  # list of entity scores,
-#    for example, [(entity_id, entity_score) for entity_id, entity_score in entities_found]
+MessageResultType = tp.List[EntityScoreType]
 
 PATH_TO_CHECKPOINT = pathlib.Path("final_solution") / 'checkpoint'
 PATH_TO_TOKENIZER = PATH_TO_CHECKPOINT / 'pretrain/tokenizer.json'
@@ -30,19 +27,25 @@ def sigmoid(x):
 
 
 def score_texts(
-    messages: tp.Iterable[str], *args, **kwargs
+    messages: tp.Iterable[str],
+    *args,
+    **kwargs
 ) -> tp.Iterable[MessageResultType]:
     """
     Main function (see tests for more clarifications)
     Args:
-        messages (tp.Iterable[str]): any iterable of strings (utf-8 encoded text messages)
+        messages (tp.Iterable[str]): any iterable of strings
+            (utf-8 encoded text messages)
 
     Returns:
-        tp.Iterable[tp.Tuple[int, float]]: for any messages returns MessageResultType object
+        tp.Iterable[tp.Tuple[int, float]]:
+        for any messages returns MessageResultType object
     -------
     Clarifications:
-    >>> assert all([len(m) < 10 ** 11 for m in messages]) # all messages are shorter than 2048 characters
+    # all messages are shorter than 2048 characters
+    # >>> assert all([len(m) < 10 ** 11 for m in messages])
     """
+
     ort = InferenceSession(
         PATH_TO_WEIGHTS,
         providers=['CUDAExecutionProvider']
@@ -67,7 +70,8 @@ def score_texts(
         ment_scores = sigmoid(ment_scores).squeeze()
         sent_scores = np.argmax(sent_scores, axis=-1).squeeze()
 
-        for index, (ment_score, sent_score) in enumerate(zip(ment_scores, sent_scores)):
+        for index, pair in enumerate(zip(ment_scores, sent_scores)):
+            ment_score, sent_score = pair
             if ment_score > THRESHOLD:
                 entity_id = index_to_id[index]
                 entity_score = float(sent_score)

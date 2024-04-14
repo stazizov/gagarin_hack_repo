@@ -1,11 +1,6 @@
 import json
 import pathlib
 import typing as tp
-
-import numpy as np
-from onnxruntime import InferenceSession
-from tokenizers import Tokenizer
-
 import final_solution
 
 PATH_TO_TEST_DATA = pathlib.Path("data") / "test_texts.json"
