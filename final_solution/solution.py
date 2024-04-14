@@ -12,7 +12,7 @@ PATH_TO_CHECKPOINT = pathlib.Path("final_solution") / 'checkpoint'
 PATH_TO_TOKENIZER = PATH_TO_CHECKPOINT / 'pretrain/tokenizer.json'
 PATH_TO_WEIGHTS = PATH_TO_CHECKPOINT / 'export.onnx'
 PATH_TO_MAP = pathlib.Path("final_solution") / 'issuer_map.json'
-THRESHOLD = 0.918
+THRESHOLD = 0.969
 
 with open(PATH_TO_MAP) as json_data:
     id_to_index = json.load(json_data)
